@@ -1,11 +1,13 @@
 {
   "name": "integer-net/solr-enterprise",
   "description": "Additional libraries for IntegerNet_Solr commercial version",
+  "type": "magento-module",
   "require": {
-    "integer-net/solr-base": "dev-master",
-    "psr/cache": "1.0.0"
+    "integer-net/solr-base": "dev-master"
   },
   "require-dev": {
+    "psr/cache": "1.0.0",
+    "Katzgrau\\KLogger\\": "lib/KLogger/src/",
     "mikey179/vfsStream": "~1.3",
     "phpunit/phpunit": "~4.5"
   },

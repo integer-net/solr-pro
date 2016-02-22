@@ -1,0 +1,3 @@
+src/* lib/IntegerNet_Solr/
+lib/KLogger/src lib/IntegerNet_Solr/KLogger
+lib/Psr/Cache/src lib/IntegerNet_Solr/Psr_Cache
