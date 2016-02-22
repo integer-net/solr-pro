@@ -10,7 +10,8 @@
          stopOnIncomplete="false"
          stopOnSkipped="false"
          strict="false"
-         verbose="false">
+         verbose="false"
+         bootstrap="vendor/autoload.php">
     <testsuite name="unit">
         <directory suffix=".php">test/SolrSuggest</directory>
     </testsuite>
