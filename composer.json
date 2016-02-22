@@ -1,5 +1,5 @@
 {
-  "name": "integer-net/solr-enterprise",
+  "name": "integer-net/solr-pro",
   "description": "Additional libraries for IntegerNet_Solr commercial version",
   "type": "magento-module",
   "require": {
