@@ -5,22 +5,24 @@
  * @category   IntegerNet
  * @package
  * @copyright  Copyright (c) 2016 integer_net GmbH (http://www.integer-net.de/)
- * @author     Fabian Schmengler <fs@integer-net.de>
+ * @author     Andreas von Studnitz <avs@integer-net.de>
  */
 
-namespace IntegerNet\SolrSuggest\Block;
+namespace IntegerNet\SolrCms\Block;
 
 
-final class AttributeOptionSuggestion
+use IntegerNet\SolrSuggest\Block\SearchTermSuggestion;
+
+final class CmsPageSuggestion
 {
-    /**
-     * @var int
-     */
-    private $id;
     /**
      * @var string
      */
     private $title;
+    /**
+     * @var string
+     */
+    private $rowClass;
     /**
      * @var int
      */
@@ -31,26 +33,17 @@ final class AttributeOptionSuggestion
     private $url;
 
     /**
-     * @param int $id
      * @param string $title
+     * @param string $rowClass
      * @param int $numResults
      * @param string $url
      */
-    public function __construct($id, $title, $numResults, $url)
+    public function __construct($title, $rowClass, $numResults, $url)
     {
-        $this->id = $id;
         $this->title = $title;
+        $this->rowClass = $rowClass;
         $this->numResults = $numResults;
         $this->url = $url;
-    }
-
-
-    /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**
@@ -59,6 +52,14 @@ final class AttributeOptionSuggestion
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRowClass()
+    {
+        return $this->rowClass;
     }
 
     /**
@@ -77,4 +78,14 @@ final class AttributeOptionSuggestion
         return $this->url;
     }
 
+    /**
+     * Returns new instance with modified row class
+     *
+     * @param $class
+     * @return SearchTermSuggestion
+     */
+    public function appendRowClass($class)
+    {
+        return new self($this->title, $this->rowClass . ' ' . $class, $this->numResults, $this->url);
+    }
 }
