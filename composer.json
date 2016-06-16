@@ -14,12 +14,13 @@
   "autoload": {
     "psr-4": {
       "IntegerNet\\SolrCategories\\": "src/SolrCategories/",
-      "IntegerNet\\SolrSuggest\\": "src/SolrSuggest/"
+      "IntegerNet\\SolrSuggest\\": "src/SolrSuggest/",
+      "Katzgrau\\KLogger\\": "lib/KLogger/src/",
+      "Psr\\Cache\\": "lib/Psr/Cache/src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Katzgrau\\KLogger\\": "lib/KLogger/src/",
       "IntegerNet\\Solr\\": "vendor/integer-net/solr-base/test/Solr/"
     }
   },
