@@ -7,24 +7,24 @@
  * @copyright  Copyright (c) 2015 integer_net GmbH (http://www.integer-net.de/)
  * @author     Fabian Schmengler <fs@integer-net.de>
  */
-namespace IntegerNet\SolrCms\Request;
+namespace IntegerNet\SolrCategories\Request;
 
 use IntegerNet\Solr\Implementor\EventDispatcher;
 use IntegerNet\Solr\Request\Request;
 use IntegerNet\Solr\Resource\LoggerDecorator;
 use IntegerNet\Solr\Resource\ResourceFacade;
 use IntegerNet\Solr\Resource\SolrResponse;
-use IntegerNet\SolrCms\Query\CmsPageQueryBuilder;
+use IntegerNet\SolrCategories\Query\CategorySearchQueryBuilder;
 use Psr\Log\LoggerInterface;
 
-class CmsPageRequest implements Request
+class CategorySearchRequest implements Request
 {
     /**
      * @var $resource ResourceFacade
      */
     private $resource;
     /**
-     * @var $queryBuilder CmsPageQueryBuilder
+     * @var $queryBuilder CategorySearchQueryBuilder
      */
     private $queryBuilder;
     /**
@@ -37,13 +37,13 @@ class CmsPageRequest implements Request
     private $logger;
 
     /**
-     * SearchTermSuggestRequest constructor.
+     * SearchTermSearchRequest constructor.
      * @param ResourceFacade $resource
-     * @param CmsPageQueryBuilder $queryBuilder
+     * @param CategorySearchQueryBuilder $queryBuilder
      * @param EventDispatcher $eventDispatcher
      * @param LoggerInterface $logger
      */
-    public function __construct(ResourceFacade $resource, CmsPageQueryBuilder $queryBuilder, EventDispatcher $eventDispatcher, LoggerInterface $logger)
+    public function __construct(ResourceFacade $resource, CategorySearchQueryBuilder $queryBuilder, EventDispatcher $eventDispatcher, LoggerInterface $logger)
     {
         $this->resource = $resource;
         $this->queryBuilder = $queryBuilder;

@@ -14,10 +14,10 @@ use IntegerNet\Solr\Query\SearchString;
 use IntegerNet\Solr\Request\ApplicationContext;
 use IntegerNet\Solr\Request\RequestFactory;
 use IntegerNet\Solr\Resource\ResourceFacade;
-use IntegerNet\SolrCategories\Query\CategorySuggestParamsBuilder;
-use IntegerNet\SolrCategories\Query\CategorySuggestQueryBuilder;
+use IntegerNet\SolrCategories\Query\CategorySearchParamsBuilder;
+use IntegerNet\SolrCategories\Query\CategorySearchQueryBuilder;
 
-class CategorySuggestRequestFactory extends RequestFactory
+class CategorySearchRequestFactory extends RequestFactory
 {
     /**
      * @var HasUserQuery
@@ -47,7 +47,7 @@ class CategorySuggestRequestFactory extends RequestFactory
 
     protected function createQueryBuilder()
     {
-        return new CategorySuggestQueryBuilder(
+        return new CategorySearchQueryBuilder(
             new SearchString($this->getQuery()->getUserQueryText()),
             $this->createParamsBuilder(),
             $this->getStoreId(),
@@ -58,7 +58,7 @@ class CategorySuggestRequestFactory extends RequestFactory
 
     protected function createParamsBuilder()
     {
-        return new CategorySuggestParamsBuilder(
+        return new CategorySearchParamsBuilder(
             new SearchString($this->query->getUserQueryText()), $this->autosuggestConfig, $this->resultsConfig, $this->getStoreId());
     }
 
@@ -67,7 +67,7 @@ class CategorySuggestRequestFactory extends RequestFactory
      */
     public function createRequest()
     {
-        return new CategorySuggestRequest(
+        return new CategorySearchRequest(
             $this->getResource(),
             $this->createQueryBuilder(),
             $this->getEventDispatcher(),
