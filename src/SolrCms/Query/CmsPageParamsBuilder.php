@@ -59,7 +59,7 @@ class CmsPageParamsBuilder implements ParamsBuilder
         $params = array(
             'q.op' => $this->resultsConfig->getSearchOperator(),
             'fq' => 'content_type:page AND store_id:' . $this->storeId,
-            'fl' => 'title_t, url_s_nonindex',
+            'fl' => 'title_t, url_s_nonindex, image_url_s_nonindex, abstract_t_nonindex',
             'sort' => 'score desc',
             'defType' => 'edismax',
         );

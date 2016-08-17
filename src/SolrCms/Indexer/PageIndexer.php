@@ -208,6 +208,8 @@ class PageIndexer
         }
 
         $pageData->setData('url_s_nonindex', $page->getUrl());
+        $pageData->setData('abstract_t_nonindex', $page->getAbstract());
+        $pageData->setData('image_url_s_nonindex', $page->getImageUrl());
     }
 
     /**

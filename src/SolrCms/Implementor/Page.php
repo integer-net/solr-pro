@@ -28,8 +28,12 @@ interface Page
     public function getSolrBoost();
     
     public function getContent();
-    
+
+    public function getAbstract();
+
     public function getTitle();
 
     public function getUrl();
+
+    public function getImageUrl();
 }
