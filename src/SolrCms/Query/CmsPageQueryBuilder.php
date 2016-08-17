@@ -62,7 +62,7 @@ class CmsPageQueryBuilder implements QueryBuilder
             $this->storeId,
             $this->getQueryText(),
             0,
-            $this->autosuggestConfig->getMaxNumberCmsPageSuggestions(),
+            100,
             $this->paramsBuilder->buildAsArray()
         );
     }
