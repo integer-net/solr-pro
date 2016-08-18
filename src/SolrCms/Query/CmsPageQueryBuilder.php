@@ -58,11 +58,15 @@ class CmsPageQueryBuilder implements QueryBuilder
 
     public function build()
     {
+        $limit = $this->cmsConfig->getMaxNumberResults();
+        if (!$limit) {
+            $limit = 100;
+        }
         return new Query(
             $this->storeId,
             $this->getQueryText(),
             0,
-            $this->cmsConfig->getMaxNumberResults(),
+            $limit,
             $this->paramsBuilder->buildAsArray()
         );
     }

@@ -59,11 +59,15 @@ class CategorySearchQueryBuilder implements QueryBuilder
 
     public function build()
     {
+        $limit = $this->categoryConfig->getMaxNumberResults();
+        if (!$limit) {
+            $limit = 100;
+        }
         return new Query(
             $this->storeId,
             $this->getQueryText(),
             0,
-            $this->categoryConfig->getMaxNumberResults(),
+            $limit,
             $this->paramsBuilder->buildAsArray()
         );
     }
