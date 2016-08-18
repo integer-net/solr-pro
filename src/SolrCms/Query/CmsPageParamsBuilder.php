@@ -4,12 +4,12 @@
  *
  * @category   IntegerNet
  * @package    IntegerNet_Solr
- * @copyright  Copyright (c) 2015 integer_net GmbH (http://www.integer-net.de/)
- * @author     Fabian Schmengler <fs@integer-net.de>
+ * @copyright  Copyright (c) 2016 integer_net GmbH (http://www.integer-net.de/)
+ * @author     Andreas von Studnitz <avs@integer-net.de>
  */
 namespace IntegerNet\SolrCms\Query;
 
-use IntegerNet\Solr\Config\AutosuggestConfig;
+use IntegerNet\Solr\Config\CmsConfig;
 use IntegerNet\Solr\Config\ResultsConfig;
 use IntegerNet\Solr\Query\ParamsBuilder;
 use IntegerNet\Solr\Query\SearchString;
@@ -17,9 +17,9 @@ use IntegerNet\Solr\Query\SearchString;
 class CmsPageParamsBuilder implements ParamsBuilder
 {
     /**
-     * @var AutosuggestConfig
+     * @var CmsConfig
      */
-    private $autosuggestConfig;
+    private $cmsConfig;
     /**
      * @var ResultsConfig
      */
@@ -36,14 +36,14 @@ class CmsPageParamsBuilder implements ParamsBuilder
     /**
      * CmsPageParamsBuilder constructor.
      * @param SearchString $searchString
-     * @param AutosuggestConfig $autosuggestConfig
+     * @param CmsConfig $cmsConfig
      * @param ResultsConfig $resultsConfig
      * @param int $storeId
      */
-    public function __construct(SearchString $searchString, AutosuggestConfig $autosuggestConfig, ResultsConfig $resultsConfig, $storeId)
+    public function __construct(SearchString $searchString, CmsConfig $cmsConfig, ResultsConfig $resultsConfig, $storeId)
     {
         $this->resultsConfig = $resultsConfig;
-        $this->autosuggestConfig = $autosuggestConfig;
+        $this->cmsConfig = $cmsConfig;
         $this->storeId = $storeId;
         $this->searchString = $searchString;
     }

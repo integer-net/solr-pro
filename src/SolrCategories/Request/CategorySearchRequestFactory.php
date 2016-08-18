@@ -4,8 +4,8 @@
  *
  * @category   IntegerNet
  * @package    IntegerNet_Solr
- * @copyright  Copyright (c) 2015 integer_net GmbH (http://www.integer-net.de/)
- * @author     Fabian Schmengler <fs@integer-net.de>
+ * @copyright  Copyright (c) 2016 integer_net GmbH (http://www.integer-net.de/)
+ * @author     Andreas von Studnitz <avs@integer-net.de>
  */
 namespace IntegerNet\SolrCategories\Request;
 
@@ -24,9 +24,9 @@ class CategorySearchRequestFactory extends RequestFactory
      */
     private $query;
     /**
-     * @var \IntegerNet\Solr\Config\AutosuggestConfig
+     * @var \IntegerNet\Solr\Config\CategoryConfig
      */
-    private $autosuggestConfig;
+    private $categoryConfig;
     /**
      * @var \IntegerNet\Solr\Config\ResultsConfig
      */
@@ -41,7 +41,7 @@ class CategorySearchRequestFactory extends RequestFactory
     {
         parent::__construct($applicationContext, $resource, $storeId);
         $this->query = $applicationContext->getQuery();
-        $this->autosuggestConfig = $applicationContext->getAutosuggestConfig();
+        $this->categoryConfig = $applicationContext->getCategoryConfig();
         $this->resultsConfig = $applicationContext->getResultsConfig();
     }
 
@@ -52,14 +52,14 @@ class CategorySearchRequestFactory extends RequestFactory
             $this->createParamsBuilder(),
             $this->getStoreId(),
             $this->getEventDispatcher(),
-            $this->autosuggestConfig
+            $this->categoryConfig
         );
     }
 
     protected function createParamsBuilder()
     {
         return new CategorySearchParamsBuilder(
-            new SearchString($this->query->getUserQueryText()), $this->autosuggestConfig, $this->resultsConfig, $this->getStoreId());
+            new SearchString($this->query->getUserQueryText()), $this->categoryConfig, $this->resultsConfig, $this->getStoreId());
     }
 
     /**

@@ -4,8 +4,8 @@
  *
  * @category   IntegerNet
  * @package    IntegerNet_Solr
- * @copyright  Copyright (c) 2015 integer_net GmbH (http://www.integer-net.de/)
- * @author     Fabian Schmengler <fs@integer-net.de>
+ * @copyright  Copyright (c) 2016 integer_net GmbH (http://www.integer-net.de/)
+ * @author     Andreas von Studnitz <avs@integer-net.de>
  */
 namespace IntegerNet\SolrCms\Request;
 
@@ -25,9 +25,9 @@ class CmsPageRequestFactory extends RequestFactory
      */
     private $query;
     /**
-     * @var \IntegerNet\Solr\Config\AutosuggestConfig
+     * @var \IntegerNet\Solr\Config\CmsConfig
      */
-    private $autosuggestConfig;
+    private $cmsConfig;
     /**
      * @var \IntegerNet\Solr\Config\ResultsConfig
      */
@@ -42,7 +42,7 @@ class CmsPageRequestFactory extends RequestFactory
     {
         parent::__construct($applicationContext, $resource, $storeId);
         $this->query = $applicationContext->getQuery();
-        $this->autosuggestConfig = $applicationContext->getAutosuggestConfig();
+        $this->cmsConfig = $applicationContext->getCmsConfig();
         $this->resultsConfig = $applicationContext->getResultsConfig();
     }
 
@@ -53,14 +53,14 @@ class CmsPageRequestFactory extends RequestFactory
             $this->createParamsBuilder(),
             $this->getStoreId(),
             $this->getEventDispatcher(),
-            $this->autosuggestConfig
+            $this->cmsConfig
         );
     }
 
     protected function createParamsBuilder()
     {
         return new CmsPageParamsBuilder(
-            new SearchString($this->query->getUserQueryText()), $this->autosuggestConfig, $this->resultsConfig, $this->getStoreId());
+            new SearchString($this->query->getUserQueryText()), $this->cmsConfig, $this->resultsConfig, $this->getStoreId());
     }
 
     /**

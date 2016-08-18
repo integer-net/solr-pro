@@ -4,8 +4,8 @@
  *
  * @category   IntegerNet
  * @package    IntegerNet_Solr
- * @copyright  Copyright (c) 2015 integer_net GmbH (http://www.integer-net.de/)
- * @author     Fabian Schmengler <fs@integer-net.de>
+ * @copyright  Copyright (c) 2016 integer_net GmbH (http://www.integer-net.de/)
+ * @author     Andreas von Studnitz <avs@integer-net.de>
  */
 namespace IntegerNet\SolrCms\Query;
 
@@ -15,7 +15,7 @@ use IntegerNet\Solr\Query\ParamsBuilder;
 use IntegerNet\Solr\Query\Query;
 use IntegerNet\Solr\Query\QueryBuilder;
 use IntegerNet\Solr\Query\SearchString;
-use IntegerNet\Solr\Config\AutosuggestConfig;
+use IntegerNet\Solr\Config\CmsConfig;
 
 class CmsPageQueryBuilder implements QueryBuilder
 {
@@ -37,9 +37,9 @@ class CmsPageQueryBuilder implements QueryBuilder
      */
     private $storeId;
     /**
-     * @var $autosuggestConfig AutosuggestConfig
+     * @var $cmsConfig CmsConfig
      */
-    private $autosuggestConfig;
+    private $cmsConfig;
 
     /**
      * @param SearchString $searchString
@@ -47,13 +47,13 @@ class CmsPageQueryBuilder implements QueryBuilder
      * @param int $storeId
      * @param EventDispatcher $eventDispatcher
      */
-    public function __construct(SearchString $searchString, ParamsBuilder $paramsBuilder, $storeId, EventDispatcher $eventDispatcher, AutosuggestConfig $autosuggestConfig)
+    public function __construct(SearchString $searchString, ParamsBuilder $paramsBuilder, $storeId, EventDispatcher $eventDispatcher, CmsConfig $cmsConfig)
     {
         $this->searchString = $searchString;
         $this->paramsBuilder = $paramsBuilder;
         $this->storeId = $storeId;
         $this->eventDispatcher = $eventDispatcher;
-        $this->autosuggestConfig = $autosuggestConfig;
+        $this->cmsConfig = $cmsConfig;
     }
 
     public function build()
@@ -62,7 +62,7 @@ class CmsPageQueryBuilder implements QueryBuilder
             $this->storeId,
             $this->getQueryText(),
             0,
-            100,
+            $this->cmsConfig->getMaxNumberResults(),
             $this->paramsBuilder->buildAsArray()
         );
     }
