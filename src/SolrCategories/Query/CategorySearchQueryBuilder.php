@@ -88,9 +88,8 @@ class CategorySearchQueryBuilder implements QueryBuilder
         $searchString = new SearchString($transportObject->getQueryText());
         $queryText = $searchString->getEscapedString() . ' OR ' . $searchString->getEscapedString();
 
-        $isFuzzyActive = true;
-        $sensitivity = 0.8;
-
+        $isFuzzyActive = $this->categoryConfig->isFuzzyActive();
+        $sensitivity = $this->categoryConfig->getFuzzySensitivity();
 
         if ($isFuzzyActive) {
             $queryText .= '~' . floatval($sensitivity);

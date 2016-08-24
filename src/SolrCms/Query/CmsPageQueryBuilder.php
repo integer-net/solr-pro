@@ -87,12 +87,11 @@ class CmsPageQueryBuilder implements QueryBuilder
         $searchString = new SearchString($transportObject->getQueryText());
         $queryText = $searchString->getEscapedString() . ' OR ' . $searchString->getEscapedString();
 
-        $isFuzzyActive = true;
-        $sensitivity = 0.8;
-
+        $isFuzzyActive = $this->cmsConfig->isFuzzyActive();
+        $sensitivity = $this->cmsConfig->getFuzzySensitivity();
 
         if ($isFuzzyActive) {
-            $queryText .= '~' . floatval($sensitivity);
+            $queryText .= '~' . $sensitivity;
         }
 
         return $queryText;
