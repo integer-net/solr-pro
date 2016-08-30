@@ -57,10 +57,13 @@ build-56-m1:
           export MAGENTO_DB_ALLOWSAME=0
           export MAGENTO_INSTALL_SAMPLE_DATA=no
           export MAGENTO_ROOT=magento1/htdocs
-          #curl -sSL https://raw.githubusercontent.com/composer/getcomposer.org/master/web/installer | php -- --quiet
-          #php composer.phar install --dev --no-interaction
+          composer install --dev --no-interaction
           git clone https://github.com/schmengler/MageTestStand.git "magento1"
-          magento1/install.sh
+          cd magento1
+          composer config repositories.Solr vcs git@github.com/integer-net/Solr
+          composer require integer_net/solr
+          install.sh
+          cd ..
           vendor/bin/phpunit --testsuite integration
 build-70:
   box: php:7.0.9-cli
