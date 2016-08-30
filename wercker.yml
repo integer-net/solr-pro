@@ -64,7 +64,7 @@ build-56-m1:
           git clone https://github.com/schmengler/MageTestStand.git "magento1"
           cd magento1
           composer config repositories.Solr vcs git@github.com:integer-net/Solr.git
-          composer require integer_net/solr
+          composer require integer_net/solr dev-develop
           install.sh
           cd ..
           vendor/bin/phpunit --testsuite integration
