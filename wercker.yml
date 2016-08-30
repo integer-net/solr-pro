@@ -56,11 +56,12 @@ build-56-m1:
           export MAGENTO_DB_NAME=magento
           export MAGENTO_DB_ALLOWSAME=0
           export MAGENTO_INSTALL_SAMPLE_DATA=no
-          export MAGENTO_ROOT=htdocs
+          export MAGENTO_ROOT=magento1/htdocs
           curl -sSL https://raw.githubusercontent.com/composer/getcomposer.org/master/web/installer | php -- --quiet
           php composer.phar require aoepeople/composer-installers:* --no-update
           php composer.phar install --dev --no-interaction
-          curl -sSL https://raw.githubusercontent.com/schmengler/MageTestStand/master/install.sh | bash
+          git clone https://github.com/schmengler/MageTestStand.git "magento1"
+          magento1/install.sh
           vendor/bin/phpunit --testsuite integration
 build-70:
   box: php:7.0.9-cli
