@@ -63,7 +63,7 @@ build-56-m1:
           composer install --dev --no-interaction
           git clone https://github.com/schmengler/MageTestStand.git "magento1"
           cd magento1
-          composer config repositories.Solr vcs git@github.com/integer-net/Solr.git
+          composer config repositories.Solr vcs git@github.com:integer-net/Solr.git
           composer require integer_net/solr
           install.sh
           cd ..
