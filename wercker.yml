@@ -32,6 +32,9 @@ build-56-m1:
         name: install php extensions
         code: docker-php-ext-install -j$(nproc) pdo_mysql mcrypt gd pcntl
     - script:
+        name: install composer
+        code: curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+    - script:
         name: "Wait for MySQL connection"
         code: |
           while ! nc -q 1 $MYSQL_PORT_3306_TCP_ADDR $MYSQL_PORT_3306_TCP_PORT </dev/null; do echo -n . && sleep 3; done
