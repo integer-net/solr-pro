@@ -7,7 +7,10 @@ build-56:
   box: php:5.6.24-cli
   steps:
     - install-packages:
-        packages: git zip pcntl
+        packages: git zip
+    - script:
+        name: install php extensions
+        code: docker-php-ext-install -j$(nproc) pcntl
     - script:
         name: install composer
         code: curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
@@ -73,10 +76,13 @@ build-70:
   box: php:7.0.9-cli
   steps:
     - install-packages:
-        packages: git zip pcntl
+        packages: git zip
     - script:
         name: install composer
         code: curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+    - script:
+        name: install php extensions
+        code: docker-php-ext-install -j$(nproc) pcntl
     - add-ssh-key:
         keyname: GITHUB_DEPLOY
         host: github.com
