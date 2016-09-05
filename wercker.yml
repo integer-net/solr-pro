@@ -1,0 +1,99 @@
+box: php
+services:
+  - id: mysql:5.6
+    env:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+build-56:
+  box: php:5.6.24-cli
+  steps:
+    - install-packages:
+        packages: git zip
+    - script:
+        name: install php extensions
+        code: docker-php-ext-install -j$(nproc) pcntl
+    - script:
+        name: install composer
+        code: curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+    - add-ssh-key:
+        keyname: GITHUB_DEPLOY
+        host: github.com
+    - add-to-known_hosts:
+        hostname: github.com
+        fingerprint: 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48
+    - script:
+        name: install dependencies
+        code: composer install --no-interaction
+    - script:
+        name: run unit tests
+        code: vendor/bin/phpunit --testsuite unit
+build-56-m1:
+  box: php:5.6.24-cli
+  steps:
+    - install-packages:
+        packages: git zip mysql-client libmcrypt-dev libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libpng12-dev netcat-openbsd
+    - script:
+        name: install php extensions
+        code: docker-php-ext-install -j$(nproc) pdo_mysql mcrypt gd pcntl
+    - script:
+        name: install composer
+        code: curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+    - script:
+        name: "Wait for MySQL connection"
+        code: |
+          while ! nc -q 1 $MYSQL_PORT_3306_TCP_ADDR $MYSQL_PORT_3306_TCP_PORT </dev/null; do echo -n . && sleep 3; done
+    - add-ssh-key:
+        keyname: GITHUB_DEPLOY
+        host: github.com
+    - add-to-known_hosts:
+        hostname: github.com
+        fingerprint: 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48
+    - script:
+        name: set up and run Magento 1 integration tests
+        code: |
+          set -e
+          set -x
+          echo memory_limit=-1 >> /usr/local/etc/php/php.ini
+          export WORKSPACE=`pwd`
+          export MAGENTO_VERSION=magento-mirror-1.9.2.2
+          export MAGENTO_DB_HOST=$MYSQL_PORT_3306_TCP_ADDR
+          export MAGENTO_DB_PORT=$MYSQL_PORT_3306_TCP_PORT
+          export MAGENTO_DB_USER=root
+          export MAGENTO_DB_PASS=$MYSQL_ENV_MYSQL_ROOT_PASSWORD
+          export MAGENTO_DB_NAME=magento
+          export MAGENTO_DB_ALLOWSAME=0
+          export MAGENTO_INSTALL_SAMPLE_DATA=no
+          export MAGENTO_ROOT=magento1/htdocs
+          composer install --dev --no-interaction
+          git clone https://github.com/schmengler/MageTestStand.git "magento1"
+          cd magento1
+          composer config repositories.Firegento composer https://packages.firegento.com
+          composer config repositories.Solr vcs git@github.com:integer-net/Solr.git
+          composer require integer_net/solr dev-develop
+          ./install.sh
+          cd ..
+          cat phpunit.xml.dist
+          vendor/bin/phpunit --testsuite integration --colors -d display_errors=1
+          echo "DONE"
+build-70:
+  box: php:7.0.9-cli
+  steps:
+    - install-packages:
+        packages: git zip
+    - script:
+        name: install composer
+        code: curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+    - script:
+        name: install php extensions
+        code: docker-php-ext-install -j$(nproc) pcntl
+    - add-ssh-key:
+        keyname: GITHUB_DEPLOY
+        host: github.com
+    - add-to-known_hosts:
+        hostname: github.com
+        fingerprint: 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48
+    - script:
+        name: install dependencies
+        code: composer install --no-interaction
+    - script:
+        name: run unit tests
+        code: vendor/bin/phpunit --testsuite unit
