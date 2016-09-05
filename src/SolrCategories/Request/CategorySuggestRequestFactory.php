@@ -12,13 +12,12 @@ namespace IntegerNet\SolrCategories\Request;
 use IntegerNet\Solr\Implementor\HasUserQuery;
 use IntegerNet\Solr\Query\SearchString;
 use IntegerNet\Solr\Request\ApplicationContext;
-use IntegerNet\Solr\Request\RequestFactory;
+use IntegerNet\Solr\Request\BaseRequestFactory;
 use IntegerNet\Solr\Resource\ResourceFacade;
 use IntegerNet\SolrCategories\Query\CategorySuggestParamsBuilder;
 use IntegerNet\SolrCategories\Query\CategorySuggestQueryBuilder;
-use IntegerNet\SolrCategories\Request\CategorySuggestRequest;
 
-class CategorySuggestRequestFactory extends RequestFactory
+class CategorySuggestRequestFactory extends BaseRequestFactory
 {
     /**
      * @var HasUserQuery

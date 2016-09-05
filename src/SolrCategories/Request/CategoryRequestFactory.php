@@ -11,15 +11,12 @@ namespace IntegerNet\SolrCategories\Request;
 
 use IntegerNet\Solr\Config\FuzzyConfig;
 use IntegerNet\Solr\Request\ApplicationContext;
-use IntegerNet\Solr\Request\RequestFactory;
-use IntegerNet\Solr\Implementor\AttributeRepository;
-use IntegerNet\Solr\Implementor\EventDispatcher;
+use IntegerNet\Solr\Request\BaseRequestFactory;
+use IntegerNet\Solr\Resource\ResourceFacade;
 use IntegerNet\SolrCategories\Query\CategoryParamsBuilder;
 use IntegerNet\SolrCategories\Query\CategoryQueryBuilder;
-use IntegerNet\Solr\Resource\ResourceFacade;
-use IntegerNet\SolrCategories\Request\CategoryRequest;
 
-class CategoryRequestFactory extends \IntegerNet\Solr\Request\RequestFactory
+class CategoryRequestFactory extends BaseRequestFactory
 {
     /**
      * @var $categoryId int
@@ -27,12 +24,12 @@ class CategoryRequestFactory extends \IntegerNet\Solr\Request\RequestFactory
     private $categoryId;
 
     /**
-     * @param \IntegerNet\Solr\Request\ApplicationContext $applicationContext
+     * @param ApplicationContext $applicationContext
      * @param ResourceFacade $resource
      * @param $storeId
      * @param $categoryId
      */
-    public function __construct(\IntegerNet\Solr\Request\ApplicationContext $applicationContext, ResourceFacade $resource, $storeId, $categoryId)
+    public function __construct(ApplicationContext $applicationContext, ResourceFacade $resource, $storeId, $categoryId)
     {
         $this->categoryId = $categoryId;
         parent::__construct($applicationContext, $resource, $storeId);
