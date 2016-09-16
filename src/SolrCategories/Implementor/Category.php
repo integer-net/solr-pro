@@ -28,8 +28,16 @@ interface Category
     public function getSolrBoost();
     
     public function getDescription();
+
+    public function getAbstract();
     
     public function getName();
 
     public function getUrl();
+
+    public function getImageUrl();
+
+    public function getPath($separator);
+
+    public function getPathExcludingCurrentCategory($separator);
 }

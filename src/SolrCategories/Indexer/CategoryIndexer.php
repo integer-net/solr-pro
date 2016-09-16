@@ -208,6 +208,9 @@ class CategoryIndexer
         }
 
         $categoryData->setData('url_s_nonindex', $category->getUrl());
+        $categoryData->setData('path_s_nonindex', $category->getPathExcludingCurrentCategory(' &gt; '));
+        $categoryData->setData('abstract_t_nonindex', $category->getAbstract());
+        $categoryData->setData('image_url_s_nonindex', $category->getImageUrl());
     }
 
     /**
