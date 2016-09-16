@@ -12,13 +12,12 @@ namespace IntegerNet\SolrCms\Request;
 use IntegerNet\Solr\Implementor\HasUserQuery;
 use IntegerNet\Solr\Query\SearchString;
 use IntegerNet\Solr\Request\ApplicationContext;
-use IntegerNet\Solr\Request\RequestFactory;
+use IntegerNet\Solr\Request\BaseRequestFactory;
 use IntegerNet\Solr\Resource\ResourceFacade;
 use IntegerNet\SolrCms\Query\CmsPageParamsBuilder;
 use IntegerNet\SolrCms\Query\CmsPageQueryBuilder;
-use IntegerNet\SolrCms\Request\CmsPageRequest;
 
-class CmsPageRequestFactory extends RequestFactory
+class CmsPageRequestFactory extends BaseRequestFactory
 {
     /**
      * @var HasUserQuery

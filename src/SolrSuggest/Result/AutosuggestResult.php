@@ -324,10 +324,10 @@ class AutosuggestResult
             }
         } else {
 
-            $categoryIds = (array)$this->getSearchRequestResult()->facet_counts->facet_fields->category;
-            $categories = $this->categoryRepository->findActiveCategoriesByIds($this->storeId, $categoryIds);
+            $numResultsByCategoryId = (array)$this->getSearchRequestResult()->facet_counts->facet_fields->category;
+            $categories = $this->categoryRepository->findActiveCategoriesByIds($this->storeId, array_keys($numResultsByCategoryId));
 
-            foreach ($categoryIds as $categoryId => $numResults) {
+            foreach ($numResultsByCategoryId as $categoryId => $numResults) {
                 if (isset($categories[$categoryId])) {
                     if (++$counter > $maxNumberCategories) {
                         break;
