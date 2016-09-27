@@ -16,6 +16,7 @@
     "psr-4": {
       "IntegerNet\\SolrCategories\\": "src/SolrCategories/",
       "IntegerNet\\SolrSuggest\\": "src/SolrSuggest/",
+      "IntegerNet\\SolrCms\\": "src/SolrCms/",
       "Katzgrau\\KLogger\\": "lib/KLogger/src/",
       "Psr\\Cache\\": "lib/Psr/Cache/src/"
     }

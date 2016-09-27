@@ -349,7 +349,7 @@ class AutosuggestResult
     }
 
     /**
-     * @return array
+     * @return AttributeSuggestion[]
      */
     public function getAttributeSuggestions()
     {

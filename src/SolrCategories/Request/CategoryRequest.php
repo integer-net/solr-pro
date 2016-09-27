@@ -18,7 +18,7 @@ use IntegerNet\SolrCategories\Query\CategoryParamsBuilder;
 use IntegerNet\SolrCategories\Query\CategoryQueryBuilder;
 use IntegerNet\Solr\Query\Params\FilterQueryBuilder;
 use IntegerNet\Solr\Resource\ResourceFacade;
-use IntegerNet\Solr\Resource\SolrResponse;
+use IntegerNet\Solr\Response\Response as SolrResponse;
 use IntegerNet\Solr\Resource\LoggerDecorator;
 use Psr\Log\LoggerInterface;
 

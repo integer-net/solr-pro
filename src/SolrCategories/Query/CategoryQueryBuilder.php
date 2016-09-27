@@ -9,7 +9,6 @@
  */
 namespace IntegerNet\SolrCategories\Query;
 
-use IntegerNet\Solr\Config\FuzzyConfig;
 use IntegerNet\Solr\Implementor\AttributeRepository;
 use IntegerNet\Solr\Implementor\EventDispatcher;
 use IntegerNet\Solr\Implementor\Pagination;

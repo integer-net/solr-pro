@@ -9,6 +9,8 @@
  */
 namespace IntegerNet\SolrSuggest\Implementor;
 
+use IntegerNet\SolrSuggest\Plain\Block\Template;
+
 interface TemplateRepository
 {
     /**
