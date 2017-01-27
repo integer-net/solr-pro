@@ -131,7 +131,7 @@ class Magento1Test extends \PHPUnit_Framework_TestCase
             \Mage::app();
             \Mage::getConfig()->getOptions()->setData('cache_dir', $cacheDir);
             \Mage::getConfig()->getOptions()->setData('log_dir', vfsStream::url(self::VFS_ROOT) . '/log');
-            return \Mage::helper('integernet_solr/factory');
+            return \Mage::helper('integernet_solrpro/factory');
         };
     }
 
