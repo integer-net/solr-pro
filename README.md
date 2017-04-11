@@ -1,6 +1,9 @@
 # solr-enterprise
 Additional libraries for IntegerNet_Solr commercial version
 
+## Build status (master)
+
+[![wercker status](https://app.wercker.com/status/ce45581f4b3421cd9ec5938dc8e6a48f/m/master "wercker status")](https://app.wercker.com/project/byKey/ce45581f4b3421cd9ec5938dc8e6a48f)
 ## Tests
 
 ### Unit Test Suite

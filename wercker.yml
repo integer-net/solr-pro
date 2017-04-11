@@ -3,6 +3,7 @@ services:
   - id: mysql:5.6
     env:
       MYSQL_ALLOW_EMPTY_PASSWORD: 1
+  - id: integernet/solr_ci:1.6.0
 build-56:
   box: php:5.6.24-cli
   steps:
@@ -20,6 +21,7 @@ build-56:
     - add-to-known_hosts:
         hostname: github.com
         fingerprint: 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48
+        type: rsa
     - script:
         name: install dependencies
         code: composer install --no-interaction
@@ -47,6 +49,7 @@ build-56-m1:
     - add-to-known_hosts:
         hostname: github.com
         fingerprint: 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48
+        type: rsa
     - script:
         name: set up and run Magento 1 integration tests
         code: |
@@ -61,15 +64,28 @@ build-56-m1:
           export MAGENTO_DB_PASS=$MYSQL_ENV_MYSQL_ROOT_PASSWORD
           export MAGENTO_DB_NAME=magento
           export MAGENTO_DB_ALLOWSAME=0
-          export MAGENTO_INSTALL_SAMPLE_DATA=no
+          export MAGENTO_INSTALL_SAMPLE_DATA=yes
           export MAGENTO_ROOT=magento1/htdocs
-          composer install --dev --no-interaction
+          curl -sSL https://raw.githubusercontent.com/composer/getcomposer.org/master/web/installer | php -- --quiet
+          composer config --global --auth --unset github-oauth.github.com
+          composer config --global github-oauth.github.com 2070094af8b5822fde18c6010a7da3208f7a3fac
+          composer -vvv --working-dir=. install --prefer-dist --no-interaction
           git clone https://github.com/schmengler/MageTestStand.git "magento1"
           cd magento1
-          composer config repositories.Firegento composer https://packages.firegento.com
-          composer config repositories.Solr vcs git@github.com:integer-net/Solr.git
-          composer require integer_net/solr dev-develop
+          composer -vvv --working-dir=. config repositories.Firegento composer https://packages.firegento.com
+          composer -vvv --working-dir=. config repositories.SolrPro vcs git@github.com:integer-net/solr-pro.git
+          composer -vvv --working-dir=. config repositories.SolrM1Pro vcs git@github.com:integer-net/solr-magento1-pro.git
+          composer -vvv --working-dir=. remove ecomdev/ecomdev_phpunit
+          composer -vvv --working-dir=. require --update-no-dev integer-net/solr-magento1-pro dev-develop
           ./install.sh
+          php tools/n98-magerun.phar config:set web/unsecure/base_url http://magento19.lh/
+          php tools/n98-magerun.phar config:set web/secure/base_url http://magento19.lh/
+          php tools/n98-magerun.phar config:set --scope=stores --scope-id=2 web/unsecure/base_url http://fr.magento19.lh/
+          php tools/n98-magerun.phar config:set --scope=stores --scope-id=2 web/secure/base_url http://fr.magento19.lh/
+          php tools/n98-magerun.phar config:set --scope=stores --scope-id=3 web/unsecure/base_url http://de.magento19.lh/
+          php tools/n98-magerun.phar config:set --scope=stores --scope-id=3 web/secure/base_url http://de.magento19.lh/
+          echo "TODO: Install Script to create and configure product attributes"
+          echo "TODO: Use pre-build container with sample data"
           cd ..
           cat phpunit.xml.dist
           vendor/bin/phpunit --testsuite integration --colors -d display_errors=1
