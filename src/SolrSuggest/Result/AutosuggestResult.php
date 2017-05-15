@@ -205,7 +205,7 @@ class AutosuggestResult
     }
 
     /**
-     * @return SearchTermSuggestion[]
+     * @return CmsPageSuggestion[]
      */
     public function getCmsPageSuggestions()
     {
@@ -255,6 +255,14 @@ class AutosuggestResult
         }
 
         return $suggestions;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalNumberMatchingProducts()
+    {
+        return intval($this->getSearchRequestResult()->response->numFound);
     }
 
     /**
