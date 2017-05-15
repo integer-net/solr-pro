@@ -371,7 +371,14 @@ class AutosuggestResult
         $attributeSuggestions = array();
 
         foreach ($attributesConfig as $attributeConfig) {
+            if (!isset($attributeConfig['attribute_code'])) {
+                continue;
+            }
+
             $attributeCode = $attributeConfig['attribute_code'];
+            if (!isset($this->getSearchRequestResult()->facet_counts->facet_fields->{$attributeCode . '_facet'})) {
+                continue;
+            }
             $optionIds = (array)$this->getSearchRequestResult()->facet_counts->facet_fields->{$attributeCode . '_facet'};
 
             $maxNumberAttributeValues = intval($attributeConfig['max_number_suggestions']);
