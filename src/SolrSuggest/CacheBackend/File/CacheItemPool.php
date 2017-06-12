@@ -4,8 +4,9 @@
  *
  * @category   IntegerNet
  * @package    IntegerNet_SolrSuggest
- * @copyright  Copyright (c) 2016 integer_net GmbH (http://www.integer-net.de/)
+ * @copyright  Copyright (c) 2017 integer_net GmbH (http://www.integer-net.de/)
  * @author     Fabian Schmengler <fs@integer-net.de>
+ * @author     Andreas von Studnitz <avs@integer-net.de>
  */
 namespace IntegerNet\SolrSuggest\CacheBackend\File;
 
@@ -221,7 +222,7 @@ class CacheItemPool implements CacheItemPoolInterface
         $charMap = array('/' => '_', '\\' => '_', '_' => '__');
         $filename = $this->rootDir . DIRECTORY_SEPARATOR . strtr($key, $charMap);
         if (!\is_dir(\dirname($filename))) {
-            \mkdir(\dirname($filename), 0770);
+            \mkdir(\dirname($filename), 0770, true);
         }
         return $filename;
     }
