@@ -9,6 +9,7 @@
  */
 namespace IntegerNet\SolrCategories\Request;
 
+use IntegerNet\Solr\Config\CategoryConfig;
 use IntegerNet\Solr\Config\FuzzyConfig;
 use IntegerNet\Solr\Request\ApplicationContext;
 use IntegerNet\Solr\Request\BaseRequestFactory;
@@ -22,6 +23,10 @@ class CategoryRequestFactory extends BaseRequestFactory
      * @var $categoryId int
      */
     private $categoryId;
+    /**
+     * @var CategoryConfig
+     */
+    private $categoryConfig;
 
     /**
      * @param ApplicationContext $applicationContext
@@ -34,6 +39,7 @@ class CategoryRequestFactory extends BaseRequestFactory
         $this->categoryId = $categoryId;
         parent::__construct($applicationContext, $resource, $storeId);
         $this->getFilterQueryBuilder()->setIsCategoryPage(true);
+        $this->categoryConfig = $applicationContext->getCategoryConfig();
     }
 
     protected function createQueryBuilder()
@@ -52,6 +58,7 @@ class CategoryRequestFactory extends BaseRequestFactory
             $this->getFilterQueryBuilder(),
             $this->getPagination(),
             $this->getResultsConfig(),
+            $this->getCategoryConfig(),
             new FuzzyConfig(false, 0, 0), //TODO check if BC breaking change (category fuzzy=false)
             $this->getStoreId(),
             $this->getCategoryId(),
@@ -78,5 +85,10 @@ class CategoryRequestFactory extends BaseRequestFactory
     protected function getCategoryId()
     {
         return $this->categoryId;
+    }
+
+    protected function getCategoryConfig()
+    {
+        return $this->categoryConfig;
     }
 }

@@ -8,6 +8,7 @@
  * @author     Fabian Schmengler <fs@integer-net.de>
  */
 namespace IntegerNet\SolrCategories\Query;
+use IntegerNet\Solr\Config\CategoryConfig;
 use IntegerNet\Solr\Config\FuzzyConfig;
 use IntegerNet\Solr\Config\ResultsConfig;
 use IntegerNet\Solr\Query\AbstractParamsBuilder;
@@ -19,22 +20,30 @@ use IntegerNet\Solr\Implementor\EventDispatcher;
 final class CategoryParamsBuilder extends AbstractParamsBuilder
 {
     private $categoryId;
+    /**
+     * @var CategoryConfig
+     */
+    private $categoryConfig;
 
     /**
      * @param AttributeRepository $attributeRepository
      * @param FilterQueryBuilder $filterQueryBuilder
      * @param Pagination $pagination
      * @param ResultsConfig $resultsConfig
+     * @param CategoryConfig $categoryConfig
      * @param FuzzyConfig $fuzzyConfig
+     * @param $storeId
      * @param int $categoryId
      * @param EventDispatcher $eventDispatcher
      */
     public function __construct(AttributeRepository $attributeRepository, FilterQueryBuilder $filterQueryBuilder,
-                                Pagination $pagination, ResultsConfig $resultsConfig, FuzzyConfig $fuzzyConfig,
+                                Pagination $pagination, ResultsConfig $resultsConfig,
+                                CategoryConfig $categoryConfig, FuzzyConfig $fuzzyConfig,
                                 $storeId, $categoryId, EventDispatcher $eventDispatcher)
     {
         parent::__construct($attributeRepository, $filterQueryBuilder, $pagination, $resultsConfig, $fuzzyConfig, $storeId, $eventDispatcher);
         $this->categoryId = $categoryId;
+        $this->categoryConfig = $categoryConfig;
     }
 
     /**
@@ -62,5 +71,18 @@ final class CategoryParamsBuilder extends AbstractParamsBuilder
         return $codes;
     }
 
+    /**
+     * @param string $attributeToReset
+     * @return string
+     */
+    protected function getFilterQuery($attributeToReset = '')
+    {
+        $filterQuery = $this->filterQueryBuilder->buildFilterQuery($this->getStoreId(), $attributeToReset);
 
+        if (!$this->categoryConfig->isShowOutOfStock()) {
+            $filterQuery .= ' AND -is_in_stock_i:0';
+        }
+
+        return $filterQuery;
+    }
 }
