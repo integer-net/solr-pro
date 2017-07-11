@@ -1,4 +1,4 @@
-# solr-enterprise
+# solr-pro
 Additional libraries for IntegerNet_Solr commercial version
 
 ## Build status (master)
