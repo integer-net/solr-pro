@@ -77,11 +77,9 @@ final class CategoryParamsBuilder extends AbstractParamsBuilder
      */
     protected function getFilterQuery($attributeToReset = '')
     {
-        $filterQuery = $this->filterQueryBuilder->buildFilterQuery($this->getStoreId(), $attributeToReset);
-
-        if (!$this->categoryConfig->isShowOutOfStock()) {
-            $filterQuery .= ' AND -is_in_stock_i:0';
-        }
+        $filterQuery = $this->filterQueryBuilder
+            ->setShowOutOfStockProducts($this->categoryConfig->isShowOutOfStock())
+            ->buildFilterQuery($this->getStoreId(), $attributeToReset);
 
         return $filterQuery;
     }

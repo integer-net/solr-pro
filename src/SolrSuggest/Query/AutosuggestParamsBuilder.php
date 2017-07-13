@@ -84,11 +84,9 @@ final class AutosuggestParamsBuilder extends AbstractParamsBuilder
      */
     protected function getFilterQuery($attributeToReset = '')
     {
-        $filterQuery = $this->filterQueryBuilder->buildFilterQuery($this->getStoreId(), $attributeToReset);
-
-        if (!$this->autosuggestConfig->isShowOutOfStock()) {
-            $filterQuery .= ' AND -is_in_stock_i:0';
-        }
+        $filterQuery = $this->filterQueryBuilder
+            ->setShowOutOfStockProducts($this->autosuggestConfig->isShowOutOfStock())
+            ->buildFilterQuery($this->getStoreId(), $attributeToReset);
 
         return $filterQuery;
     }
