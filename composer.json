@@ -3,7 +3,7 @@
   "description": "Additional libraries for IntegerNet_Solr commercial version",
   "type": "magento-module",
   "require": {
-    "integer-net/solr-base": "dev-solr-priority-for-outofstock-products"
+    "integer-net/solr-base": "^1.0.0|^2.0.0|^3.0.0"
   },
   "require-dev": {
     "psr/cache": "1.0.0",
