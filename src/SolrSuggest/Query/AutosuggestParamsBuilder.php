@@ -10,9 +10,42 @@
 namespace IntegerNet\SolrSuggest\Query;
 
 use IntegerNet\Solr\Query\AbstractParamsBuilder;
+use IntegerNet\Solr\Config\FuzzyConfig;
+use IntegerNet\Solr\Config\ResultsConfig;
+use IntegerNet\Solr\Config\AutosuggestConfig;
+use IntegerNet\Solr\Query\Params\FilterQueryBuilder;
+use IntegerNet\Solr\Implementor\AttributeRepository;
+use IntegerNet\Solr\Implementor\Pagination;
 
 final class AutosuggestParamsBuilder extends AbstractParamsBuilder
 {
+    /**
+     * @var AutosuggestConfig
+     */
+    private $autosuggestConfig;
+
+    public function __construct(
+        AttributeRepository $attributeRepository,
+        FilterQueryBuilder $filterQueryBuilder,
+        Pagination $pagination,
+        ResultsConfig $resultsConfig,
+        FuzzyConfig $fuzzyConfig,
+        AutosuggestConfig $autosuggestConfig,
+        $storeId,
+        $eventDispatcher
+    ) {
+        parent::__construct(
+            $attributeRepository,
+            $filterQueryBuilder,
+            $pagination,
+            $resultsConfig,
+            $fuzzyConfig,
+            $storeId,
+            $eventDispatcher
+        );
+        $this->autosuggestConfig = $autosuggestConfig;
+    }
+
     public function buildAsArray($attributeToReset = '')
     {
         $params = parent::buildAsArray($attributeToReset);
@@ -45,5 +78,16 @@ final class AutosuggestParamsBuilder extends AbstractParamsBuilder
         return $codes;
     }
 
+    /**
+     * @param string $attributeToReset
+     * @return string
+     */
+    protected function getFilterQuery($attributeToReset = '')
+    {
+        $filterQuery = $this->filterQueryBuilder
+            ->setShowOutOfStockProducts($this->autosuggestConfig->isShowOutOfStock())
+            ->buildFilterQuery($this->getStoreId(), $attributeToReset);
 
+        return $filterQuery;
+    }
 }

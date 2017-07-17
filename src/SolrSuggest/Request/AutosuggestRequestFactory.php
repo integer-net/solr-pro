@@ -13,9 +13,15 @@ use IntegerNet\Solr\Request\ApplicationContext;
 use IntegerNet\Solr\Request\SearchRequestFactory;
 use IntegerNet\Solr\Resource\ResourceFacade;
 use IntegerNet\SolrSuggest\Query\AutosuggestParamsBuilder;
+use IntegerNet\Solr\Config\AutosuggestConfig;
 
 class AutosuggestRequestFactory extends SearchRequestFactory
 {
+    /**
+     * @var AutosuggestConfig
+     */
+    private $autosuggestConfig;
+
     /**
      * @param ApplicationContext $applicationContext
      * @param ResourceFacade $resource
@@ -24,6 +30,7 @@ class AutosuggestRequestFactory extends SearchRequestFactory
     public function __construct(ApplicationContext $applicationContext, ResourceFacade $resource, $storeId)
     {
         parent::__construct($applicationContext, $resource, $storeId);
+        $this->autosuggestConfig = $applicationContext->getAutosuggestConfig();
     }
 
     public function createParamsBuilder()
@@ -34,8 +41,17 @@ class AutosuggestRequestFactory extends SearchRequestFactory
             $this->getPagination(),
             $this->getResultsConfig(),
             $this->getFuzzyConfig(),
+            $this->getAutosuggestConfig(),
             $this->getStoreId(),
             $this->getEventDispatcher()
         );
+    }
+
+    /**
+     * @return AutosuggestConfig
+     */
+    protected function getAutosuggestConfig()
+    {
+        return $this->autosuggestConfig;
     }
 }
