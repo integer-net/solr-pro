@@ -46,6 +46,7 @@ class CategorySuggestQueryBuilder implements QueryBuilder
      * @param ParamsBuilder $paramsBuilder
      * @param int $storeId
      * @param EventDispatcher $eventDispatcher
+     * @param AutosuggestConfig $autosuggestConfig
      */
     public function __construct(SearchString $searchString, ParamsBuilder $paramsBuilder, $storeId, EventDispatcher $eventDispatcher, AutosuggestConfig $autosuggestConfig)
     {
@@ -83,9 +84,8 @@ class CategorySuggestQueryBuilder implements QueryBuilder
         $searchString = new SearchString($transportObject->getQueryText());
         $queryText = $searchString->getEscapedString() . ' OR ' . $searchString->getEscapedString();
 
-        $isFuzzyActive = true;
-        $sensitivity = 0.8;
-
+        $isFuzzyActive = $this->autosuggestConfig->isFuzzyActiveForCategories();
+        $sensitivity = $this->autosuggestConfig->getFuzzySensitivityForCategories();
 
         if ($isFuzzyActive) {
             $queryText .= '~' . floatval($sensitivity);
