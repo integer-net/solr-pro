@@ -59,7 +59,7 @@ class CategorySearchParamsBuilder implements ParamsBuilder
         $params = array(
             'q.op' => $this->resultsConfig->getSearchOperator(),
             'fq' => 'content_type:category AND store_id:' . $this->storeId,
-            'fl' => 'name_t, url_s_nonindex, image_url_s_nonindex, abstract_t_nonindex, path_s_nonindex',
+            'fl' => 'name_t, url_s_nonindex, image_url_s_nonindex, thumbnail_url_s_nonindex, abstract_t_nonindex, path_s_nonindex',
             'sort' => 'score desc',
             'defType' => 'edismax',
         );
