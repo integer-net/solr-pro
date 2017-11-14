@@ -75,13 +75,4 @@ class CategorySearchParamsBuilder implements ParamsBuilder
     {
         return $this->storeId;
     }
-
-    /**
-     * @param string $attributeToReset
-     * @return $this
-     */
-    public function setAttributeToReset($attributeToReset)
-    {
-        return $this;
-    }
 }
