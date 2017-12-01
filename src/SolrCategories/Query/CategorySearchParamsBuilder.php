@@ -62,6 +62,7 @@ class CategorySearchParamsBuilder implements ParamsBuilder
             'fl' => 'name_t, url_s_nonindex, image_url_s_nonindex, abstract_t_nonindex, path_s_nonindex',
             'sort' => 'score desc',
             'defType' => 'edismax',
+            'mm' => '1',
         );
 
         return $params;

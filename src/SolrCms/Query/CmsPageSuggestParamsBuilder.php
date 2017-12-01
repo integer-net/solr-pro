@@ -62,6 +62,7 @@ class CmsPageSuggestParamsBuilder implements ParamsBuilder
             'fl' => 'title_t, url_s_nonindex',
             'sort' => 'score desc',
             'defType' => 'edismax',
+            'mm' => '1',
         );
 
         return $params;

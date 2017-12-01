@@ -62,6 +62,7 @@ class CategorySuggestParamsBuilder implements ParamsBuilder
             'fl' => 'name_t, url_s_nonindex,product_id',
             'sort' => 'score desc',
             'defType' => 'edismax',
+            'mm' => '1',
         );
 
         return $params;
