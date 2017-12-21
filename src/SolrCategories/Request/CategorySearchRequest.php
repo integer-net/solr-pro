@@ -9,6 +9,7 @@
  */
 namespace IntegerNet\SolrCategories\Request;
 
+use IntegerNet\Solr\Event\Transport;
 use IntegerNet\Solr\Implementor\EventDispatcher;
 use IntegerNet\Solr\Request\Request;
 use IntegerNet\Solr\Resource\LoggerDecorator;
@@ -58,16 +59,30 @@ class CategorySearchRequest implements Request
      */
     public function doRequest($activeFilterAttributeCodes = array())
     {
-        $startTime = microtime(true);
         $query = $this->queryBuilder->build();
+
+        $transportObject = new Transport(array(
+            'store_id' => $this->queryBuilder->getParamsBuilder()->getStoreId(),
+            'query_text' => $query->getQueryText(),
+            'start_item' => $query->getOffset(),
+            'page_size' => $query->getLimit(),
+            'params' => $query->getParams()
+        ));
+
+        $this->eventDispatcher->dispatch('integernet_solr_before_category_search_request', array('transport' => $transportObject));
+
+        $startTime = microtime(true);
         $result = $this->resource->search(
-            $this->queryBuilder->getParamsBuilder()->getStoreId(),
-            $query->getQueryText(),
-            $query->getOffset(),
-            $query->getLimit(),
-            $query->getParams()
+            $transportObject->getStoreId(),
+            $transportObject->getQueryText(),
+            $transportObject->getStartItem(), // Start item
+            $transportObject->getPageSize(), // Items per page
+            $transportObject->getParams()
         );
         $this->logger->logResult($result, microtime(true) - $startTime);
+
+        $this->eventDispatcher->dispatch('integernet_solr_after_category_search_request', array('result' => $result));
+
         return $result;
     }
 
