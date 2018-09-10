@@ -51,10 +51,9 @@ class CmsPageSuggestParamsBuilder implements ParamsBuilder
     /**
      * Return parameters as array as expected by solr service
      *
-     * @param string $attributeToReset
      * @return mixed[]
      */
-    public function buildAsArray($attributeToReset = '')
+    public function buildAsArray()
     {
         $params = array(
             'q.op' => $this->resultsConfig->getSearchOperator(),

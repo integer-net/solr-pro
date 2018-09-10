@@ -46,9 +46,9 @@ final class AutosuggestParamsBuilder extends AbstractParamsBuilder
         $this->autosuggestConfig = $autosuggestConfig;
     }
 
-    public function buildAsArray($attributeToReset = '')
+    public function buildAsArray()
     {
-        $params = parent::buildAsArray($attributeToReset);
+        $params = parent::buildAsArray();
         $params['rows'] = $this->pagination->getPageSize();
 
         return $params;
