@@ -115,6 +115,10 @@ class CategoryRequest implements Request, HasFilter
                 'params' => $query->getParams(),
             ));
 
+            if ($attributeCode == 'category') {
+                $transportObject->setQueryText('*:*');
+            }
+
             $this->eventDispatcher->dispatch('integernet_solr_before_category_request', array('transport' => $transportObject));
 
             $parentResult = $this->getResource()->search(
