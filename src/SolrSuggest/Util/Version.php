@@ -11,7 +11,7 @@ namespace IntegerNet\SolrSuggest\Util;
 
 class Version
 {
-    const VERSION = '1.2.5';
+    const VERSION = '1.2.6';
 
     static public function getVersion()
     {
