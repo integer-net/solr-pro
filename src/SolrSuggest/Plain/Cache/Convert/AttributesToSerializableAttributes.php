@@ -77,7 +77,7 @@ final class AttributesToSerializableAttributes implements SerializableAttributeR
         $self = $this;
         $allowedAttributeCodes = array_map(
             function($row) { return $row['attribute_code']; },
-            $this->autosuggestConfigByStore[$storeId]->getAttributeFilterSuggestions());
+            array_filter($this->autosuggestConfigByStore[$storeId]->getAttributeFilterSuggestions()));
         return array_map(
             function (Attribute $attribute) use ($self, $storeId) {
                 return $self->_convertAttribute($attribute, $storeId);
